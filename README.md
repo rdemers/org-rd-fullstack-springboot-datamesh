@@ -1,2 +1,2 @@
 # org-rd-fullstack-springboot-datamesh
-Springboot Datames Application with Nuxt(UX/UI) &amp; Apache Pulsar.
+Springboot Datamesh Application with Nuxt(UX/UI) and Apache/Pulsar(MOM).
