@@ -38,7 +38,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <jasperreports.version>6.20.5</jasperreports.version>
+        <apache.pulsar.version>3.1.0</apache.pulsar.version>
+        <io.grpc.version>1.54.1</io.grpc.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
         <jjwt.version>0.9.1</jjwt.version>
@@ -51,7 +52,7 @@
         <maven-surefire-plugin.version>3.0.0-M9</maven-surefire-plugin.version>
 
         <spring.boot.version>3.1.4</spring.boot.version>
-        <springdoc.version>2.1.0</springdoc.version>
+        <springdoc.version>2.2.0</springdoc.version>
     </properties>
 
     <dependencyManagement>
@@ -79,10 +80,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-graphql</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -118,24 +115,34 @@
             <version>${logstash.logback.encoder.version}</version>
         </dependency>
         <dependency>
-            <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports</artifactId>
-            <version>${jasperreports.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-logging</artifactId>
-                    <groupId>commons-logging</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports-functions</artifactId>
-            <version>${jasperreports.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.pulsar</groupId>
+            <artifactId>pulsar-broker</artifactId>
+            <version>${apache.pulsar.version}</version>
+            <exclusions> <!-- Dealing with some mismatch dependencies. -->
+                <exclusion>
+                    <groupId>io.grpc</groupId>
+                    <artifactId>grpc-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.grpc</groupId>
+                    <artifactId>grpc-api</artifactId>
+                </exclusion>
+            </exclusions> 
+        </dependency>
+        <!-- Resolve pulsar-broker mismatch dependencies. -->
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-core</artifactId>
+            <version>${io.grpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-api</artifactId>
+            <version>${io.grpc.version}</version>
         </dependency>
 
         <!-- JDK 9+ dependencies - No longer included with the JDK. -->
